@@ -1,0 +1,66 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import FetchPage from '@/Pages/FetchPage/FetchPage';
+import pageContainer from '../ReduxConnectors/{{PAGE_NAME}}Container';
+import RequestActions from '@/Redux/RequestActions';
+
+class {{PAGE_NAME}}Request extends Component {
+    static navigationOptions = () => ({
+    });
+
+    constructor(props) {
+        super(props);
+        const { navigation } = props;
+        this.successPage = React.createElement(pageContainer, { navigation });
+        this.pageFetch = false;
+    }
+
+    startFetch = () => {
+        this.pageFetch = true;
+    };
+
+    fetchSuccess = () => {
+        this.pageFetch = false;
+    };
+
+    fetchFailure = () => {
+        this.pageFetch = false;
+    };
+
+    render() {
+        const {
+            fetch,
+            status,
+            route,
+            normalAction
+        } = this.props;
+        return (
+            <FetchPage
+                route={route}
+                status={status}
+                showSafeAreaView={false}
+                successPage={this.successPage}
+                fetch={fetch && this.pageFetch}
+                fetchAction={normalAction(
+                    this.fetchSuccess,
+                    this.fetchFailure,
+                    this.startFetch,
+                )}
+            />
+        );
+    }
+}
+
+const mapStateToProps = (state) => ({
+    fetch: state.{{REDUX_KEY}}.fetch,
+    status: state.{{REDUX_KEY}}.responseState.status
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    normalAction: (onSuccess, onFailure, onStart) => () => {
+        onStart();
+        dispatch(RequestActions.{{REDUX_KEY}}());
+    },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)({{PAGE_NAME}}Request);

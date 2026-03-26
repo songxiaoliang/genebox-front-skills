@@ -1,0 +1,19 @@
+import { connect } from 'react-redux';
+import customSelectorCreator from '@/Tools/CustomSelectorCreator';
+import { TokenSelectors } from '@/Redux/TokenRedux';
+import { BoxSelectors } from '@/Redux/BoxRedux';
+import {{PAGE_NAME}} from '@/Pages/{{MODULE}}/Pages/{{PAGE_NAME}}';
+import RequestActions from '@/Redux/RequestActions';
+
+const mapStateToProps = (state) => customSelectorCreator(
+    [],
+    () => ({
+
+    }),
+);
+
+const mapDispatchToProps = (dispatch) => ({
+
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)({{PAGE_NAME}});
